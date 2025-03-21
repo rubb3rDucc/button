@@ -1,9 +1,8 @@
 import dotenv from "dotenv";
 import client from "./dbConnection"
 import express, { Request, Response } from "express";
-
-const http = require("http");
-const morgan = require("morgan");
+import morgan from "morgan"
+import http from "http"
 
 dotenv.config();
 
