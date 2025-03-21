@@ -28,7 +28,6 @@ router.use((req, res, next) => {
     next();
 });
 router.get("/", (req, res) => {
-    res.send("Hello World!");
 });
 router.get("/health", (req, res) => {
     const data = {

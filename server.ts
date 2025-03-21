@@ -36,7 +36,6 @@ router.use((req: any, res: any, next: any) => {
 });
 
 router.get("/", (req: any, res: any) => {
-  res.send("Hello World!");
 });
 
 router.get("/health", (req: any, res: any) => {
