@@ -4,19 +4,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
-const dbConnection_1 = require("./dbConnection");
-const express = require("express");
+const dbConnection_1 = __importDefault(require("./dbConnection"));
+const express_1 = __importDefault(require("express"));
 const http = require("http");
 const morgan = require("morgan");
 dotenv_1.default.config();
-const app = express();
-const router = express.Router();
+const app = (0, express_1.default)();
+const router = express_1.default.Router();
 const server = http.createServer(app);
 const allowedOrigins = ["http://localhost:3000"];
 const port = process.env.PORT;
 app.use(morgan("tiny"));
 app.use("/api/v1", router);
-app.use(express.static(__dirname + '/public'));
+app.use(express_1.default.static(__dirname + '/public'));
 router.use((req, res, next) => {
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
@@ -27,9 +27,9 @@ router.use((req, res, next) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-router.get("/", (req, res) => {
+router.get("/", () => {
 });
-router.get("/health", (req, res) => {
+router.get("/health", (res) => {
     const data = {
         uptime: process.uptime(),
         message: "Ok",
@@ -37,15 +37,15 @@ router.get("/health", (req, res) => {
     };
     res.status(200).send(data);
 });
-router.get("/count", (req, res) => {
-    dbConnection_1.client.query(`SELECT * FROM button_metrics;`, (err, results) => {
+router.get("/count", (res) => {
+    dbConnection_1.default.query(`SELECT * FROM button_metrics;`, (err, results) => {
         if (err)
             throw err;
         res.send(results.rows);
     });
 });
-router.post("/increment", (req, res) => {
-    dbConnection_1.client.query(`UPDATE button_metrics 
+router.post("/increment", (res) => {
+    dbConnection_1.default.query(`UPDATE button_metrics 
                 SET times_pressed = times_pressed + 1, 
                     last_pressed = now();`, (err, results) => {
         if (err)
@@ -54,8 +54,8 @@ router.post("/increment", (req, res) => {
         console.log("incremented button count");
     });
 });
-router.post("/decrement", (req, res) => {
-    dbConnection_1.client.query(`UPDATE button_metrics 
+router.post("/decrement", (res) => {
+    dbConnection_1.default.query(`UPDATE button_metrics 
                 SET times_pressed = times_pressed - 1, 
                     last_pressed = now();`, (err, results) => {
         if (err)

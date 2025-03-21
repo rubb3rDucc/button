@@ -1,8 +1,7 @@
-import { Query } from "./node_modules/@types/pg/index.d";
 import dotenv from "dotenv";
-import { client } from "./dbConnection";
+import client from "./dbConnection"
+import express, { Request, Response } from "express";
 
-const express = require("express");
 const http = require("http");
 const morgan = require("morgan");
 
@@ -19,8 +18,8 @@ app.use(morgan("tiny"));
 app.use("/api/v1", router);
 app.use(express.static(__dirname + '/public'));
 
-router.use((req: any, res: any, next: any) => {
-  const origin = req.headers.origin;
+router.use((req: Request, res: Response, next: any) => {
+  const origin: string | undefined = req.headers.origin!;
 
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin);
@@ -32,13 +31,14 @@ router.use((req: any, res: any, next: any) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
+
   next();
 });
 
-router.get("/", (req: any, res: any) => {
+router.get("/", () => {
 });
 
-router.get("/health", (req: any, res: any) => {
+router.get("/health", (res: Response) => {
   const data = {
     uptime: process.uptime(),
     message: "Ok",
@@ -48,14 +48,14 @@ router.get("/health", (req: any, res: any) => {
   res.status(200).send(data);
 });
 
-router.get("/count", (req: any, res: any) => {
+router.get("/count", (res: Response) => {
   client.query(`SELECT * FROM button_metrics;`, (err: any, results: any) => {
     if (err) throw err;
     res.send(results.rows);
   });
 });
 
-router.post("/increment", (req: any, res: any) => {
+router.post("/increment", (res: Response) => {
   client.query(`UPDATE button_metrics 
                 SET times_pressed = times_pressed + 1, 
                     last_pressed = now();`,
@@ -66,7 +66,7 @@ router.post("/increment", (req: any, res: any) => {
     });
 });
 
-router.post("/decrement", (req: any, res: any) => {
+router.post("/decrement", (res: Response) => {
   client.query(`UPDATE button_metrics 
                 SET times_pressed = times_pressed - 1, 
                     last_pressed = now();`,
