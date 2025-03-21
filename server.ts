@@ -13,7 +13,7 @@ const allowedOrigins = ["http://localhost:3000"];
 
 const port = process.env.PORT;
 
-app.use(morgan("tiny"));
+app.use(morgan("short"));
 app.use("/api/v1", router);
 app.use(express.static(__dirname + '/public'));
 
@@ -37,7 +37,7 @@ router.use((req: Request, res: Response, next: any) => {
 router.get("/", () => {
 });
 
-router.get("/health", (res: Response) => {
+router.get("/health", (req:Request, res: Response) => {
   const data = {
     uptime: process.uptime(),
     message: "Ok",
@@ -47,14 +47,14 @@ router.get("/health", (res: Response) => {
   res.status(200).send(data);
 });
 
-router.get("/count", (res: Response) => {
+router.get("/count", (req:Request, res: Response) => {
   client.query(`SELECT * FROM button_metrics;`, (err: any, results: any) => {
     if (err) throw err;
     res.send(results.rows);
   });
 });
 
-router.post("/increment", (res: Response) => {
+router.post("/increment", (req:Request, res: Response) => {
   client.query(`UPDATE button_metrics 
                 SET times_pressed = times_pressed + 1, 
                     last_pressed = now();`,
@@ -65,7 +65,7 @@ router.post("/increment", (res: Response) => {
     });
 });
 
-router.post("/decrement", (res: Response) => {
+router.post("/decrement", (req:Request, res: Response) => {
   client.query(`UPDATE button_metrics 
                 SET times_pressed = times_pressed - 1, 
                     last_pressed = now();`,
