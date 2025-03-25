@@ -5,7 +5,7 @@
     "prebuild": "rimraf ./dist",
     "build": "npm run compile && npm run copy-assets",
     "compile": "tsc",
-    "copy-assets": "copyfiles --all --up 1 --exclude \"./**/*.{ts,tsx,test.js}\" \"./src/**/*\" ./dist",
+    "copy-assets": "copyfiles --all --up 1 --exclude \"./**/*.{ts,tsx}\" \"./src/**/*\" ./dist",
     "start": "node ./dist/server.js",
     "test": "jest --forceExit",
     "dev": "nodemon --verbose",
