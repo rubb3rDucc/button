@@ -20,9 +20,9 @@ jobs:
 
       - name: Prep environment
         run: |
-            brew install docker
+            brew install docker &&
             colima start
-            docker run -e [...]
+            
 
       - name: Build Docker image
         run: docker-compose -f docker-compose.base.yml build
