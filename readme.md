@@ -13,6 +13,13 @@ npm install
 npm run dev
 ```
 
+edit and then recompile typescript
+
+```bash
+npx tsc
+```
+
+
 ## how to test
 ```bash
 npm run test
