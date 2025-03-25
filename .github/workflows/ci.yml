@@ -18,23 +18,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-          
-      - name: Install dependencies
-        working-directory: ./
-        run: npm install
+      - name: Build Docker image
+        run: docker-compose -f docker-compose.base.yml build
 
-    #   - name: Run linting
-    #     working-directory: ./backend
-    #     run: npm run lint --if-present
+      - name: Run Docker image
+        run: docker-compose -f docker-compose.base.yml up
 
-      - name: Build App
-        working-directory: ./
-        run: npm run build --if-present
-          
       - name: Run tests
-        working-directory: ./
-        run: npm run test
+        run: docker exec server-1 npm run tests
