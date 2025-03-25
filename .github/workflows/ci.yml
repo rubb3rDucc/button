@@ -12,11 +12,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Prep environment
+        uses: brew install docker
+              colima start
 
       - name: Build Docker image
         run: docker-compose -f docker-compose.base.yml build
