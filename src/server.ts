@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
-// import morgan from "morgan";
+import morgan from "morgan";
 import http from "http";
 import { router } from "./controllers/routes"
 import {pool} from "./db/dbConnection"
@@ -17,8 +17,9 @@ app.use(express.static(__dirname + '/public'));
 
 pool.connect((err: any) => {
   if (err) throw err;  
-  server.listen(port);
 });
+
+server.listen(port);
 
 async function closeServer() {
   await server.close((err)=>{
