@@ -1,9 +1,11 @@
 {
   "name": "button_js",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/server.js",
+    "test": "jest --forceExit",
+    "dev": "nodemon --ignore src/tests/ --watch src/server.js",
+    "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
   "author": "",
@@ -17,11 +19,17 @@
     "pg-promise": "^11.13.0"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@types/express": "^5.0.1",
+    "@types/jest": "^29.5.14",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.13.10",
     "@types/pg": "^8.11.11",
+    "jest": "^29.7.0",
     "morgan": "^1.10.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.1.0",
+    "ts-jest": "^29.3.0",
     "typescript": "^5.8.2"
   }
 }
