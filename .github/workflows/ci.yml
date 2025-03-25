@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Prep environment
-        uses: docker-compose up -d
+        run: docker-compose up -d
 
       - name: Build Docker image
         run: docker-compose -f docker-compose.base.yml build
