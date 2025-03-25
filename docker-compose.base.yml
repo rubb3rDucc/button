@@ -22,13 +22,12 @@ services:
       timeout: 5s
     volumes:
       - pgstore:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - ./src/sql/init.sql:/docker-entrypoint-initdb.d/create_database.sql
   server:
     container_name: server-1
     image: node:18
     restart: always
     env_file: .env.docker
-    command: ["node", "./src/server.js"]
     build:
       context: .
       dockerfile: Dockerfile
