@@ -2,6 +2,10 @@
 
 overkill button counter
 
+## preview
+
+![alt text](./src/pics/preview_img.png "Logo Title Text 1")
+
 ## stack
 
 TypeScript, Express, PostgreSQL, HTML/CSS, Docker
@@ -25,9 +29,15 @@ npx tsc
 npm run test
 ```
 
+## how to use
+- create a pqsql db
+- copy env.template to a new .env file with db credentials
+- run this cmd in dir root
 
-## how to deploy
 ```bash
-blah blah getting to it
+npm install # if you haven't alr 
+npm run start
 ```
+
+- navigate to http://localhost:3000
 
