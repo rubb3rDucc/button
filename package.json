@@ -2,9 +2,13 @@
   "name": "button_js",
   "version": "1.0.0",
   "scripts": {
-    "start": "node ./src/server.js",
+    "prebuild": "rimraf ./dist",
+    "build": "npm run compile && npm run copy-assets",
+    "compile": "tsc",
+    "copy-assets": "copyfiles --all --up 1 --exclude \"./**/*.{ts,tsx,test.js}\" \"./src/**/*\" ./dist",
+    "start": "node ./dist/server.js",
     "test": "jest --forceExit",
-    "dev": "nodemon --ignore src/tests/ --watch src/server.js",
+    "dev": "nodemon --verbose",
     "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
@@ -12,11 +16,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "copyfiles": "^2.4.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "kysely": "^0.27.6",
     "pg": "^8.14.1",
-    "pg-promise": "^11.13.0"
+    "pg-promise": "^11.13.0",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
