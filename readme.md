@@ -14,7 +14,8 @@ TypeScript, Express, PostgreSQL, HTML/CSS, Docker
 
 ```bash
 npm install
-
+npm run dev
+# starts nodemon and watches for changes in /src
 ```
 
 ## how to test
