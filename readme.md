@@ -4,7 +4,7 @@ overkill button counter
 
 ## preview
 
-![alt text](./src/pics/preview_img.png "Logo Title Text 1")
+![alt text](./readme-assets/pics/preview_img.png "Logo Title Text 1")
 
 ## stack
 
@@ -14,15 +14,8 @@ TypeScript, Express, PostgreSQL, HTML/CSS, Docker
 
 ```bash
 npm install
-npm run dev
+
 ```
-
-edit and then recompile typescript
-
-```bash
-npx tsc
-```
-
 
 ## how to test
 ```bash
@@ -36,6 +29,7 @@ npm run test
 
 ```bash
 npm install # if you haven't alr 
+npm run build
 npm run start
 ```
 
