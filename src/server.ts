@@ -1,81 +1,33 @@
 import dotenv from "dotenv";
-import client from "./dbConnection"
-import express, { Request, Response } from "express";
-import morgan from "morgan"
-import http from "http"
+import express from "express";
+// import morgan from "morgan";
+import http from "http";
+import { router } from "./controllers/routes"
+import {pool} from "./db/dbConnection"
 
 dotenv.config();
 
 const app = express();
-const router = express.Router();
 const server = http.createServer(app);
-const allowedOrigins = ["http://localhost:3000"];
-
 const port = process.env.PORT;
 
 app.use(morgan("short"));
 app.use("/api/v1", router);
 app.use(express.static(__dirname + '/public'));
 
-router.use((req: Request, res: Response, next: any) => {
-  const origin: string | undefined = req.headers.origin!;
-
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
-
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-
-  next();
+pool.connect((err: any) => {
+  if (err) throw err;  
+  server.listen(port);
 });
 
-router.get("/", () => {
-});
-
-router.get("/health", (req:Request, res: Response) => {
-  const data = {
-    uptime: process.uptime(),
-    message: "Ok",
-    date: new Date(),
-  };
-
-  res.status(200).send(data);
-});
-
-router.get("/count", (req:Request, res: Response) => {
-  client.query(`SELECT * FROM button_metrics;`, (err: any, results: any) => {
-    if (err) throw err;
-    res.send(results.rows);
+async function closeServer() {
+  await server.close((err)=>{
+      pool.end();
   });
-});
+}
 
-router.post("/increment", (req:Request, res: Response) => {
-  client.query(`UPDATE button_metrics 
-                SET times_pressed = times_pressed + 1, 
-                    last_pressed = now();`,
-      (err:any, results:any) => {
-      if (err) throw err;
-      res.send(results.rows);
-      console.log("incremented button count");
-    });
-});
-
-router.post("/decrement", (req:Request, res: Response) => {
-  client.query(`UPDATE button_metrics 
-                SET times_pressed = times_pressed - 1, 
-                    last_pressed = now();`,
-      (err:any, results:any) => {
-      if (err) throw err;
-      res.send(results.rows);
-      console.log("decremented button count");
-    });
-});
-
-server.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = {
+  app,
+  server,
+  closeServer
+}
