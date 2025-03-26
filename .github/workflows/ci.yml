@@ -2,8 +2,6 @@ name: CI/CD Pipeline
 
 on:
   push:
-    paths:
-      - 'dist/**'
     branches:
       - master
   pull_request:
@@ -20,15 +18,16 @@ jobs:
 
       - name: Prep environment
         run: |
-            brew install docker &&
-            colima start
-            
+            brew install docker && colima start
 
       - name: Build Docker image
-        run: docker-compose -f docker-compose.base.yml build
+        run: |
+            docker-compose -f docker-compose.base.yml build
 
       - name: Run Docker image
-        run: docker-compose -f docker-compose.base.yml up
+        run: |
+            docker-compose -f docker-compose.base.yml up
 
       - name: Run tests
-        run: docker exec server-1 npm run tests
+        run: |
+            docker exec server-1 npm run tests
