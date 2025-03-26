@@ -3,6 +3,5 @@
 FROM node:alpine
 WORKDIR /home/node/app
 COPY . .
-# RUN npm install \ 
-#     npm run build
+RUN npm install 
 # EXPOSE 3000
