@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Docker image
         run: |
-            docker-compose -f docker-compose.base.yml up
+            docker-compose -f docker-compose.base.yml up -d
 
       - name: Run tests
         run: |
