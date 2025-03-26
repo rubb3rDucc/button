@@ -6,7 +6,7 @@ services:
   db:
     container_name: postgres
     image: postgres:12-alpine
-    restart: always
+    restart: on-failure
     user: postgres
     environment:
       POSTGRES_DB: button-db
@@ -37,6 +37,5 @@ services:
     depends_on:
       db:
         condition: service_healthy
-        restart: true
     expose:
       - 3000
