@@ -38,6 +38,10 @@ jobs:
         run: |
              docker exec server-1 ls -la
 
+      - name: build the dist
+        run: |
+             docker exec server-1 npm run build
+
     #   - name: build dist and run tests
     #     run: |
     #          npm install &&
