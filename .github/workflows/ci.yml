@@ -34,9 +34,16 @@ jobs:
         run: |
             docker-compose -f docker-compose.base.yml up -d
             
-      - name: ls the curr di
+      - name: ls the curr dir
         run: |
              ls -la
+
+      - name: build dist
+        run: |
+             npm run build &&
+             npm run test
+
+
       - name: Run tests
         run: |
             docker exec server-1 npm run test
