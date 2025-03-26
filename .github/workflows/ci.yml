@@ -26,28 +26,26 @@ jobs:
             docker-compose --version
         continue-on-error: false
 
-      - name: Build Docker image
+      - name: Build Docker Containers (Server and DB)
         run: |
             docker-compose -f docker-compose.base.yml build
 
-      - name: Run Docker image
+      - name: Run Docker Containers
         run: |
             docker-compose -f docker-compose.base.yml up -d
-            
-      - name: ls the curr dir
-        run: |
-             docker exec server-1 ls -la
 
-      - name: build the dist
+      - name: Build the Server within the Docker Image
         run: |
              docker exec server-1 npm run build
-
-    #   - name: build dist and run tests
-    #     run: |
-    #          npm install &&
-    #          npm run build &&
-    #          npm run test
 
       - name: Run tests
         run: |
             docker exec server-1 npm run test
+
+      # - name: Linting
+      #   run: |
+      #       docker exec server-1 npm run lint
+      
+      - name: Teardown Docker Environment
+        run: |
+            docker-compose -f docker-compose.base.yml down
