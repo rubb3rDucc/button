@@ -9,7 +9,8 @@ on:
       - master
 
 jobs:
-  build:
+
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -49,3 +50,46 @@ jobs:
       - name: Teardown Docker Environment
         run: |
             docker-compose -f docker-compose.base.yml down
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v4
+
+      - name: Install Docker Compose
+        run: |
+            sudo curl -L "https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            docker-compose --version
+        continue-on-error: false
+
+      - name: Build Docker Containers (Server and DB)
+        run: |
+            docker-compose -f docker-compose.base.yml build
+
+      - name: Run Docker Containers
+        run: |
+            docker-compose -f docker-compose.base.yml up -d
+
+      - name: Build the Server within the Docker Image
+        run: |
+             docker exec server-1 npm run build
+
+      - name: Start the Server within the Docker Image
+        run: |
+             docker exec server-1 npm run start
+
+  deploy:
+     needs: build # The deploy step will only run if the build step passes
+     runs-on: ubuntu-latest
+
+     steps:
+      - name: Deploy to production
+          uses: johnbeynon/render-deploy-action@v0.0.8
+          with:
+            service-id: ${{ secrets.SERVICE_ID }}
+            api-key: ${{ secrets.RENDER_API_KEY }}
+
