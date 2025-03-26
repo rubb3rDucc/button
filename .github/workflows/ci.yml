@@ -36,7 +36,7 @@ jobs:
 
       - name: Build the Server within the Docker Image
         run: |
-             docker exec server-1 npm run build
+             docker exec server-1 npm install && npm run build
 
       - name: Run tests
         run: |
