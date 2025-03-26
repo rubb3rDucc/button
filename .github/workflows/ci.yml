@@ -33,7 +33,10 @@ jobs:
       - name: Run Docker image
         run: |
             docker-compose -f docker-compose.base.yml up -d
-
+            
+      - name: ls the curr di
+        run: |
+             ls -la
       - name: Run tests
         run: |
             docker exec server-1 npm run test
