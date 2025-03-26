@@ -17,18 +17,18 @@ services:
     ports:
       - "5433:5433"
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres -d button-db']
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 5s
       timeout: 5s
+      retries: 5
     volumes:
       - pgstore:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - ./src/sql/init.sql:/docker-entrypoint-initdb.d/create_database.sql
   server:
     container_name: server-1
     image: node:18
     restart: always
     env_file: .env.docker
-    command: ["node", "./src/server.js"]
     build:
       context: .
       dockerfile: Dockerfile
@@ -38,6 +38,5 @@ services:
     depends_on:
       db:
         condition: service_healthy
-        restart: true
     expose:
       - 3000

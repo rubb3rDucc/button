@@ -1,3 +1,3 @@
 module.exports = {
-  roots: ["dist/tests/"],
+  roots: ["<rootDir>/dist"],
 }
