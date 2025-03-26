@@ -38,12 +38,13 @@ jobs:
         run: |
              ls -la
 
-      - name: build dist
+      - name: build dist and run tests
         run: |
+             npm install &&
              npm run build &&
              npm run test
 
 
-      - name: Run tests
-        run: |
-            docker exec server-1 npm run test
+    #   - name: Run tests
+    #     run: |
+    #         docker exec server-1 npm run test
