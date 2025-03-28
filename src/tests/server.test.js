@@ -1,12 +1,13 @@
-const dotenv = require("dotenv");
-const request = require("supertest");
-const { app } = require("../server.js");
-// const { pool } = require("../db/dbConnection.js");
-const { afterAll } = require("@jest/globals");
-const { Pool } = require("pg");
-const http = require("http");
+import {afterAll} from "@jest/globals";
+import pg from "pg";
+import {app} from "../server.js";
+import dotenv from "dotenv";
+import request from "supertest";
+import http from "http";
+
 
 dotenv.config();
+const {Pool} = pg;
 // dotenv.default.config();
 
 describe("Post Endpoints", () => {
