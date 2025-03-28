@@ -1,5 +1,5 @@
 async function getData() {
-  const url = "http://localhost:3000/api/v1/count";
+  const url = "/api/v1/count";
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -16,7 +16,7 @@ async function getData() {
 }
 
 async function incrementCount() {
-  const url = "http://localhost:3000/api/v1/increment";
+  const url = "/api/v1/increment";
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -37,7 +37,7 @@ async function incrementCount() {
 }
 
 async function decrementCount() {
-  const url = "http://localhost:3000/api/v1/decrement";
+  const url = "/api/v1/decrement";
   try {
     const response = await fetch(url, {
       method: "POST",
