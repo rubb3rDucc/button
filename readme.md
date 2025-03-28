@@ -11,6 +11,11 @@ overkill button counter
 
 TypeScript, Express, PostgreSQL, HTML/CSS, Docker, Cloud Run, Cloud SQL, Google Cloud (for cloud deployment), Jest, <\insert trendy technology\>
 
+## deployed here on Google Cloud
+
+https://button-server-538186000397.us-east4.run.app/
+
+
 ## how to develop
 
 ```bash
@@ -39,7 +44,7 @@ docker-compose -f docker-compose.base.yml build
 docker-compose -f docker-compose.base.yml up -d
 ```
 
-## how to use
+## how to use (locally)
 - create a pqsql db
 - copy env.template to a new .env file with db credentials
 - run this cmd in dir root
