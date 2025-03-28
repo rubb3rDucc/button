@@ -3,5 +3,5 @@
     "ext": ".js,.ts",
     "ignore": ["./dist"],
     "delay": "2",
-    "exec": "npm run build && npm run start"
+    "exec": "npm run build"
   }
