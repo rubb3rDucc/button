@@ -1,7 +1,8 @@
 import express from "express";
 import { Request, Response } from "express";
-import { pool } from "../db/dbConnection";
+import { pool } from "../db/dbConnection.js";
 
+// used for when developing locally
 const allowedOrigins = ["http://localhost:3000"];
 
 const router = express.Router();
@@ -22,8 +23,6 @@ router.use((req: Request, res: Response, next: any) => {
 
   next();
 });
-
-router.get("/", () => {});
 
 router.get("/health", (req: Request, res: Response) => {
   const data = {
@@ -58,7 +57,7 @@ router.post("/increment", (req: Request, res: Response) => {
 router.post("/decrement", (req: Request, res: Response) => {
   pool.query(
     `UPDATE button_metrics 
-                SET times_pressed = times_pressed - 1, 
+     SET times_pressed = times_pressed - 1, 
                     last_pressed = now();`,
     (err: any, results: any) => {
       if (err) throw err;
