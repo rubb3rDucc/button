@@ -28,7 +28,7 @@ services:
     container_name: server-1
     image: node:18
     restart: always
-    env_file: .env.docker
+    env_file: .env.test
     build:
       context: .
       dockerfile: test.Dockerfile
