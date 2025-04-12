@@ -4,7 +4,6 @@ import { pool } from "../db/dbConnection.js";
 
 // used for when developing locally
 const allowedOrigins = ["http://localhost:3000"];
-
 const router = express.Router();
 
 router.use((req: Request, res: Response, next: any) => {
@@ -15,7 +14,7 @@ router.use((req: Request, res: Response, next: any) => {
   }
 
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT");
+  res.header("Access-Control-Allow-Methods", "GET");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
@@ -49,7 +48,6 @@ router.post("/increment", (req: Request, res: Response) => {
     (err: any, results: any) => {
       if (err) throw err;
       res.send(results.rows);
-      // console.log("incremented button count");
     }
   );
 });
@@ -62,9 +60,8 @@ router.post("/decrement", (req: Request, res: Response) => {
     (err: any, results: any) => {
       if (err) throw err;
       res.send(results.rows);
-      // console.log("decremented button count");
     }
   );
 });
 
-export { router, pool };
+export { router };
